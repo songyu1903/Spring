@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 
     @GetMapping("/join")
-    public String MemberJoin(){
+    public String memberJoin(){
         return "member/join";
     }
     @PostMapping("/join")
-    public void MemberJoin(MemberDTO memberDTO){
+    public String memberJoin(MemberDTO memberDTO){
         System.out.println("memberDTO = " + memberDTO);
+        return "member/result";
     }
 }
