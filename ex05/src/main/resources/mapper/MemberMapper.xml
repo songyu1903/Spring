@@ -15,8 +15,14 @@
         SET NAME = #{name} , AGE = #{age}
         WHERE MEMBER_ID = #{memberId}
     </update>
-    <delete id="deleteMember" parameterType="memberDTO">
-        DELETE TBL_MEMBER
+    <delete id="deleteMember" parameterType="long">
+        DELETE FROM TBL_MEMBER
         WHERE MEMBER_ID = #{meberId}
     </delete>
+
+    <select id="selectAll" resultType="memberDTO">
+        SELECT MEMBER_ID, NAME, AGE
+        FROM TBL_MEMBER
+        ORDER BY MEMBER_ID
+    </select>
 </mapper>

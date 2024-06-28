@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.Member;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,6 +44,23 @@ class MemberMapperTest {
 
     @Test
     void deleteMember() {
-        MemberDTO memberDTO = memberMapper.deleteMember(1L);
+        memberMapper.deleteMember(1L);
+    }
+
+    @Test
+    void insertDummy(){
+        for (int i = 0; i < 10; i++) {
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setAge(10 + i);
+            memberDTO.setName("test" + i);
+
+            memberMapper.insertMember(memberDTO);
+        }
+    }
+
+    @Test
+    void selectAll() {
+        List<MemberDTO> memberDTOList = memberMapper.selectAll();
+        System.out.println("memberDTOList = " + memberDTOList);
     }
 }

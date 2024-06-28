@@ -3,6 +3,9 @@ package com.example.ex05.mapper;
 import com.example.ex05.dto.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
+
 @Mapper
 public interface MemberMapper {
     void insertMember(MemberDTO memberDTO);
@@ -11,5 +14,7 @@ public interface MemberMapper {
 
     void updateMember(MemberDTO memberDTO);
 
-    MemberDTO deleteMember(long memberId);
+    void deleteMember(long memberId);
+
+    List<MemberDTO> selectAll();
 }
