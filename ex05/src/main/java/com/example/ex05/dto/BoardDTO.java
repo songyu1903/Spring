@@ -1,5 +1,11 @@
 package com.example.ex05.dto;
 
-public class BoardDTO {
+import lombok.Data;
 
+@Data
+public class BoardDTO {
+    private Long boardId;
+    private String title;
+    private String content;
+    private String writer;
 }
