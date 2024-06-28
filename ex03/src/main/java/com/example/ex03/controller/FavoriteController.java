@@ -6,17 +6,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/ex")
-public class ExampleController {
-    @GetMapping("/01")
-    public String ex01(){
-        return "ex/01";
+public class FavoriteController {
+    @GetMapping("/favorite")
+    public String favorite(){
+        return "favorite/input";
     }
-    @PostMapping("/01")
-    public void ex01 (@RequestParam("id") String userName){
-        System.out.println("userName = " + userName);
+    @PostMapping("favorite")
+    public void favorite(@RequestParam("colors") List<String> colors){
+        System.out.println("colors = " + colors);
     }
-
-
 }
