@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Result Page</h1>
+    <p th:text="${food}"></p>
+    <p th:text="${colors}"></p>
+
+    <h1 th:each="color : ${colors}" th:text="${colors}"></h1>
+
+    <th:block th:each="v : ${colors}">
+         <h3 th:text="${v}"></h3>
+    </th:block>
+</body>
+</html>
