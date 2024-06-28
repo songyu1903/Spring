@@ -1,4 +1,4 @@
-package com.example.ex04.mapper;
+package com.example.ex05.mapper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,6 @@ class TimeMapperTest {
 
     @Test
     void selectTime() {
-        String time = timeMapper.selectTime();
-        System.out.println("time = " + time);
-    }
-    @Test
-    void selectTime2(){
-        String time2 = timeMapper.selectTime2();
-        System.out.println("time2 = " + time2);
+        timeMapper .selectTime();
     }
 }
