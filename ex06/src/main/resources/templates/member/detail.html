@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script defer th:src="@{/member/detail.js}"></script>
+</head>
+<body>
+<h1>detail page</h1>
+<div th:object="${foundMember}">
+    <h3 th:text="*{memberId} + '번 회원'"></h3>
+    <h3 th:text="'이름 : ' + *{name}"></h3>
+    <h3 th:text="'나이 : ' + *{age}"></h3>
+
+    <button type="button" id="list-btn">목록으로</button>
+    <button type="button" id="modify-btn" th:data-id="${foundMember?.memberId}">수정하기</button>
+</div>
+</body>
+</html>

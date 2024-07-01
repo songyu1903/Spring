@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ex06.mapper.MemberMapper">
+    <insert id="insertMember" parameterType="memberDTO">
+        INSERT INTO TBL_MEMBER(MEMBER_ID, NAME, AGE)
+        VALUES (SEQ_MEMBER.nextval, #{name}, #{age})
+    </insert>
+
+    <select id="selectMember" parameterType="long" resultType="memberDTO">
+        SELECT MEMBER_ID, NAME, AGE
+        FROM TBL_MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <update id="updateMember" parameterType="memberDTO">
+        UPDATE TBL_MEMBER
+        SET NAME = #{name}, AGE = #{age}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <delete id="deleteMember" parameterType="long">
+        DELETE FROM TBL_MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </delete>
+
+    <select id="selectAll" resultType="memberDTO">
+        SELECT MEMBER_ID, NAME, AGE
+        FROM TBL_MEMBER
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

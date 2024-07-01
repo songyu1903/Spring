@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>member list</h1>
+<table>
+    <tr>
+        <th>번호</th>
+        <th>이름</th>
+    </tr>
+    <tr th:each="dto : ${memberList}">
+        <td th:text="${dto.memberId}"></td>
+        <td>
+            <a th:href="@{/member/detail(memberId=${dto.memberId})}" th:text="${dto.name}"></a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
