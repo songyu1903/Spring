@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a {
+            text-decoration: none; /* 밑줄 제거 */
+            color: blue; /* 글자 색상 */
+            padding: 10px 20px; /* 안쪽 여백 */
+            border: 1px solid blue; /* 테두리 */
+            border-radius: 5px; /* 테두리 둥글게 */
+            display: inline-block; /* 블록 요소처럼 작동 */
+            transition: background-color 0.3s; /* 배경색 변경 트랜지션 */
+        }
+
+        a:hover {
+            background-color: lightblue; /* 호버 시 배경색 */
+            color: white; /* 호버 시 글자 색상 */
+        }
+    </style>
+</head>
+<body>
+    <h1>Detail Page</h1>
+    <div th:object="${board}">
+      <h3 th:text="*{title}"></h3>
+      <p th:text="*{writer}"></p>
+      <p th:text="*{content}"></p>
+    </div>
+
+    <a th:href="@{/board/list}">목록으로</a>
+    <a th:href="@{/board/modify(boardId=${board.boardId})}">수정하기</a>
+
+</body>
+</html>
