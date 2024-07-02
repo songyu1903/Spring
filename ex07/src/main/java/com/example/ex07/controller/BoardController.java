@@ -27,9 +27,16 @@ public class BoardController {
     }
     @GetMapping("/detail")
     public String detail(Long boardId, Model model){
-        BoardDTO boardDTO = boardService.findBoardDetail(boardId);
+        BoardDTO boardDTO = null;
+        try {
+            boardDTO = boardService.findBoardDetail(boardId);
+        } catch (IllegalStateException e) {
+            return "redirect:/board/list";
+        }
         model.addAttribute("boardDTO", boardDTO);
         return "board/detail";
     }
+
+
 }
 

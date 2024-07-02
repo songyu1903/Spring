@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,7 +27,10 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO findBoardDetail(Long boardId) {
         boardMapper.updateViewCnt(boardId);
 
-        BoardDTO boardDTO = boardMapper.selectBoard(boardId);
+//        BoardDTO boardDTO = boardMapper.selectBoard(boardId);
+        Optional<BoardDTO> opt = boardMapper.selectOne(boardId);
+        BoardDTO boardDTO =
+                opt.orElseThrow(() -> new IllegalStateException("존재하지 않는 게시물 번호"));
 
         return boardDTO;
     }

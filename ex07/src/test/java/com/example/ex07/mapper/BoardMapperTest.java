@@ -39,4 +39,6 @@ class BoardMapperTest {
     void selectAll() {
         List<BoardDTO> boardDTOList = boardMapper.selectAll();
     }
+
+
 }

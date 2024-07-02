@@ -25,6 +25,11 @@
         FROM TBL_BOARD
     </select>
 
+    <select id="selectOne">
+        SELECT BOARD_ID, TITLE, CONTENT, VIEW_CNT
+        FROM TBL_BOARD
+        WHERE BOARD_ID = #{boardId}
+    </select>
 </mapper>
 
 

@@ -4,6 +4,7 @@ import com.example.ex07.dto.BoardDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface BoardMapper {
@@ -12,4 +13,6 @@ public interface BoardMapper {
     void updateViewCnt(Long boardDTO);
 
     List<BoardDTO> selectAll();
+
+    Optional<BoardDTO> selectOne(Long boardId);
 }
