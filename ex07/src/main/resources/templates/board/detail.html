@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>datail page</h1>
+    <h3 th:text="${boardDTO.title}"></h3>
+    <p>
+        조회수 : <span th:text="${boardDTO.viewCnt}"></span>
+    </p>
+    <p th:text="${boardDTO.content}"></p>
+</body>
+</html>
