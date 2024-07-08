@@ -20,6 +20,7 @@
         .input > div {
             margin-top: 10px;
             text-align: right;
+            display: flex;
         }
 
         .btn-box{
@@ -28,6 +29,7 @@
             margin-top: 20px;
         }
     </style>
+    <script defer th:src="@{/js/member/join.js}"></script>
 </head>
 <body>
 <fieldset>
@@ -44,7 +46,10 @@
                 <div class="gender-label">성별 :</div>
             </div>
             <div class="input">
-                <div><input type="text" name="loginId"></div>
+                <div>
+                    <input type="text" name="loginId" id="loginId"> <button type="button" id="check-id">중복검사</button>
+                    <span class="input-msg"></span>
+                </div>
                 <div><input type="password" name="password"></div>
                 <div><input type="text" name="name"></div>
                 <div><input type="text" name="address"></div>
