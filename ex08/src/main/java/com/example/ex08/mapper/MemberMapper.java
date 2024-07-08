@@ -18,4 +18,6 @@ public interface MemberMapper {
 //    Spring이 내부에서 map으로 변환하여 넘겨준다.
     Optional<Long> selectMemberId(@Param("loginId") String loginId,
                                   @Param("password") String password);
+
+    int selectLoginIdCount(String loginId);
 }

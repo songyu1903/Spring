@@ -10,4 +10,9 @@
         FROM TBL_MEMBER
         WHERE LOGIN_ID = #{loginId} AND PASSWORD = #{password}
     </select>
+    <select id="selectLoginIdCount">
+        SELECT COUNT(MEMBER_ID)
+        FROM TBL_MEMBER
+        WHERE LOGIN_ID = #{loginId}
+    </select>
 </mapper>
