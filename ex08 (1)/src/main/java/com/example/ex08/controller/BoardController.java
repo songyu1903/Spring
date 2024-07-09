@@ -1,14 +1,21 @@
 package com.example.ex08.controller;
 
+import com.example.ex08.dto.BoardWriteDTO;
+import com.example.ex08.service.BoardService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
+    private final BoardService boardService;
+
     @GetMapping("/list")
     public String list(){
         return "board/list";
@@ -19,10 +26,32 @@ public class BoardController {
         return "board/detail";
     }
 
+//    @GetMapping("/write")
+//    public String write(HttpSession session){
+//        Long memberId = (Long)session.getAttribute("memberId");
+//        if(memberId == null){
+//            return "redirect:/member/login";
+//        }
+//        return "board/write";
+//    }
+
     @GetMapping("/write")
-    public String write(){
+    public String write(@SessionAttribute(value = "memberId", required = false)Long memberId){
+        if(memberId == null){
+            return "redirect:/member/login";
+        }
         return "board/write";
     }
+
+    @PostMapping("write")
+    public String write(BoardWriteDTO boardWriteDTO,
+                        @SessionAttribute("memberId") Long memberId){
+        boardWriteDTO.setMemberId(memberId);
+        boardService.addBoard(boardWriteDTO);
+
+        return "redirect:/board/list";
+    }
+
 }
 
 

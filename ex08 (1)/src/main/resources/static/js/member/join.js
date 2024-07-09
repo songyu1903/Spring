@@ -28,7 +28,6 @@
     });
 }
 
-
 {
     let $loginIdInput = document.querySelector('#loginId');
 

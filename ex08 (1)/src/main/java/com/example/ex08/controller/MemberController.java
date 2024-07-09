@@ -3,9 +3,14 @@ package com.example.ex08.controller;
 import com.example.ex08.dto.MemberDTO;
 import com.example.ex08.exception.DuplicatedLoginIdException;
 import com.example.ex08.service.MemberService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +28,16 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login(){
+//    화면에 뿌릴때는 Model을 사용해야한다
+    public String login(HttpServletRequest req, Model model){
+        Cookie[] cookies = req.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if("loginId".equals(cookie.getName())){
+                    model.addAttribute("loginId", cookie.getValue());
+                }
+            }
+        }
         return "member/login";
     }
 
@@ -39,10 +53,29 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(String loginId, String password) {
+//    로그인 (아이디,패스워드) 일치 검증
+    public String login(String loginId, String password, boolean rememberMe ,
+                        HttpServletResponse resp,
+                        HttpSession session) {
         Long memberId = memberService.findMemberId(loginId, password);
         System.out.println("memberId = " + memberId);
-        return null;
+        System.out.println("rememberMe = " + rememberMe);
+        if(rememberMe && memberId != null){
+            Cookie cookie = new Cookie("loginId", loginId);
+            cookie.setMaxAge(60 * 60 * 24 * 7);
+            cookie.setPath("/");
+            resp.addCookie(cookie);
+        }
+
+        session.setAttribute("memberId", memberId);
+
+        return "redirect:/board/list";
+    }
+//    로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate(); // 세션 종료
+        return "redirect:/board/list";
     }
 
 //  @ResponseBody는 메서드가 반환하는 데이터를 응답 본문에 담아 보낸다.

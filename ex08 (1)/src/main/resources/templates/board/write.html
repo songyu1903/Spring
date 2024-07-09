@@ -20,6 +20,8 @@
         button{
             padding: 10px;
         }
+
+
         fieldset{
             width: 1000px;
             display: flex;
@@ -32,7 +34,7 @@
 <body>
 <fieldset>
     <legend>커뮤니티 글쓰기</legend>
-    <form action="/board/write" method="post">
+    <form th:action="@{/board/write}" method="post">
         <h3>제목</h3>
         <input type="text" name="title" id=""> <br> <br>
         <h3>내용</h3>

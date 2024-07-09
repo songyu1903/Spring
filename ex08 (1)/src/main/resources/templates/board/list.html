@@ -49,14 +49,30 @@
             width: 100px;
             margin-top: 20px;
         }
+        button:hover{
+            background-color: #c3fffa;
+        }
 
+        a{
+            text-decoration-line: none;
+        }
     </style>
+    <script defer th:src="@{/js/board/list.js}"></script>
 </head>
 <body>
 <section>
     <div class="flex">
         <h1>커뮤니티 게시판</h1>
-        <button type="button">글쓰기</button>
+
+        <th:block th:if="${session.memberId != null}">
+            <a th:href="@{/member/logout}">로그아웃</a>
+            <button type="button" id="write-btn">글쓰기</button>
+        </th:block>
+        <th:block th:unless="${session.memberId != null}">
+            <a th:href="@{/member/login}">로그인</a>
+            <a th:href="@{/member/join}">회원가입</a>
+        </th:block>
+
     </div>
     <table cellspacing="0">
         <thead>
