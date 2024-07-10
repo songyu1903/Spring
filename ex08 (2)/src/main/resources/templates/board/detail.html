@@ -63,6 +63,7 @@
             width: 600px;
         }
     </style>
+    <script defer th:src="@{/js/board/detail.js}"></script>
 </head>
 <body>
 <fieldset>
@@ -75,18 +76,19 @@
         <br>
         <div class="btn-box">
             <button>수정 하기</button>
-            <button type="button">뒤로가기</button>
+            <button type="button" id="back-btn">뒤로가기</button>
         </div>
     </form>
 </fieldset>
 <br>
 <div>
     <textarea name="content" id="content"></textarea>
-    <button type="button">댓글 작성</button>
+    <button type="button" id="write-btn" th:data-id="${board.boardId}">댓글 작성</button>
 </div>
 <br>
-<div class="comment-row">
-    <div>작성자 : </div>
-</div>
+<div class="comments-box"></div>
+<!--<div class="comment-row">-->
+<!--    <div>작성자 : </div>-->
+<!--</div>-->
 </body>
 </html>
