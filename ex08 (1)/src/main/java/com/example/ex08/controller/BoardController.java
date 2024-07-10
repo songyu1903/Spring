@@ -1,14 +1,19 @@
 package com.example.ex08.controller;
 
+import com.example.ex08.dto.BoardDetailDTO;
+import com.example.ex08.dto.BoardListDTO;
 import com.example.ex08.dto.BoardWriteDTO;
 import com.example.ex08.service.BoardService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -17,12 +22,16 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public String list(){
+    public String list(Model model){
+        List<BoardListDTO> list = boardService.findList();
+        model.addAttribute("list", list);
         return "board/list";
     }
 
     @GetMapping("/detail")
-    public String detail(){
+    public String detail(Long boardId, Model model){
+        BoardDetailDTO board = boardService.findBoard(boardId);
+        model.addAttribute("board", board);
         return "board/detail";
     }
 
@@ -51,6 +60,8 @@ public class BoardController {
 
         return "redirect:/board/list";
     }
+
+
 
 }
 
