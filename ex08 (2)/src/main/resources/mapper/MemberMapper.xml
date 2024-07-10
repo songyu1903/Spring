@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ex08.mapper.MemberMapper">
+    <insert id="insertMember">
+        INSERT INTO TBL_MEMBER(MEMBER_ID, LOGIN_ID, PASSWORD, NAME, ADDRESS, ADDRESS_DETAIL, ZIPCODE, GENDER)
+        VALUES (SEQ_MEMBER.nextval, #{loginId}, #{password}, #{name}, #{address}, #{addressDetail}, #{zipcode}, #{gender})
+    </insert>
+
+    <select id="selectMemberId">
+        SELECT MEMBER_ID
+        FROM TBL_MEMBER
+        WHERE LOGIN_ID = #{loginId} AND PASSWORD = #{password}
+    </select>
+
+    <select id="selectLoginIdCount">
+        SELECT COUNT(MEMBER_ID)
+        FROM TBL_MEMBER
+        WHERE LOGIN_ID = #{loginId}
+    </select>
+</mapper>
+
+
+
+
+
+
+
+

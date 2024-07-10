@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ex08.mapper.CommentMapper">
+    <insert id="insertComment">
+        INSERT INTO TBL_COMMENT(COMMENT_ID, CONTENT, MEMBER_ID, BOARD_ID)
+        VALUES (SEQ_COMMENT.nextval, #{content}, #{memberId}, #{boardId})
+    </insert>
+
+    <select id="selectList">
+        SELECT COMMENT_ID, CONTENT, M.MEMBER_ID, BOARD_ID,
+               M.LOGIN_ID
+        FROM TBL_COMMENT C JOIN TBL_MEMBER M
+                                ON C.MEMBER_ID = M.MEMBER_ID
+    </select>
+
+    <update id="updateComment">
+        UPDATE TBL_COMMENT
+        SET CONTENT = #{content}
+        WHERE COMMENT_ID = #{commentId}
+    </update>
+
+    <delete id="deleteComment">
+        DELETE FROM TBL_COMMENT
+        WHERE COMMENT_ID = #{commentId}
+    </delete>
+</mapper>
