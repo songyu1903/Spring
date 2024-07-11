@@ -30,8 +30,8 @@ class BoardMapperTest2 {
         BoardDetailDTO boardDetailDTO = boardMapper.selectBoard(boardWriteDTO.getBoardId()).get();
         System.out.println("boardDetailDTO = " + boardDetailDTO);
 
-
+//        assertNotNull(boardDetailDTO.getTitle()); // Null 아니다 검증
 //        assertEquals(boardDetailDTO.getTitle(), "test2");
-        assertThat(boardDetailDTO.getTitle()).isEqualTo("test2");
+        assertThat(boardDetailDTO.getTitle()).isEqualTo("test2"); // assertj 메서드
     }
 }
