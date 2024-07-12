@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ex08.mapper.DynamicMapper">
+    <insert id="">
+
+    </insert>
+    <select id="selectList" parameterType="dynamicDTO" resultType="BoardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+               M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+                              ON B.MEMBER_ID = M.MEMBER_ID
+        <if test="searchType == 'title' ">
+            WHERE TITLE LIKE '%' || #{keyword} || '%' -- 연결연산자 사용
+        </if>
+        <if test="searchType == 'loginId' ">
+            WHERE LOGIN_ID LIKE '%' || #{keyword} || '%'
+        </if>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+    <select id="selectList2" parameterType="dynamicDTO" resultType="BoardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+        M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+        ON B.MEMBER_ID = M.MEMBER_ID
+        <choose>
+            <when test="searchType == 'title' ">
+                WHERE TITLE LIKE '%' || #{keyword} || '%' -- 연결연산자 사용
+            </when>
+            <when test="searchType == 'loginId' ">
+                WHERE LOGIN_ID LIKE '%' || #{keyword} || '%'
+            </when>
+                <otherwise>
+--                     else 같은 친구
+                </otherwise>
+        </choose>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+
+    <select id="selectList3" parameterType="dynamicDTO" resultType="BoardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+        M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+        ON B.MEMBER_ID = M.MEMBER_ID
+        <where>
+            <choose>
+                <when test="searchType == 'title' ">
+                     TITLE LIKE '%' || #{keyword} || '%' -- 연결연산자 사용
+                </when>
+                <when test="searchType == 'loginId' ">
+                     LOGIN_ID LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+        </where>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+
+</mapper>

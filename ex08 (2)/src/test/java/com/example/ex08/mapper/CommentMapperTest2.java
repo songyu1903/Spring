@@ -3,9 +3,12 @@ package com.example.ex08.mapper;
 import com.example.ex08.dto.CommentListDTO;
 import com.example.ex08.dto.CommentModifyDTO;
 import com.example.ex08.dto.CommentWriteDTO;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,47 +16,56 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CommentMapperTest {
+@Transactional
+class CommentMapperTest2 {
 
     @Autowired
     CommentMapper commentMapper;
 
     CommentWriteDTO commentWriteDTO;
 
-    @Test
-    void insertComment() {
+    @BeforeEach
+    void setUp() {
         commentWriteDTO = new CommentWriteDTO();
-        commentWriteDTO.setContent("test content");
+        commentWriteDTO.setContent("test comment");
         commentWriteDTO.setMemberId(2L);
         commentWriteDTO.setBoardId(4L);
-
-        commentMapper.insertComment(commentWriteDTO);
     }
 
     @Test
-    void selectList() {
+    void insertComment() {
+//        given
+
+        commentMapper.insertComment(commentWriteDTO);
+
+//        when
         List<CommentListDTO> list = commentMapper.selectList(4L);
-        System.out.println("list = " + list);
+
+//        then
+        assertThat(list)
+                .extracting("content")
+                .contains("test comment");
     }
 
     @Test
     void updateComment() {
+        // given
+         commentMapper.insertComment(commentWriteDTO);
+
+         // when
         CommentModifyDTO commentModifyDTO = new CommentModifyDTO();
-        commentModifyDTO.setCommentId(1L);
-        commentModifyDTO.setContent("update content");
+        commentModifyDTO.setCommentId(commentWriteDTO.getCommentId());
+        commentModifyDTO.setContent("modify comment");
+        commentMapper.updateComment(commentModifyDTO);
+
+        // then
+        List<CommentListDTO> list = commentMapper.selectList(commentWriteDTO.getBoardId());
+        assertThat(list)
+                .extracting("content")
+                .contains("modify comment");
     }
 
     @Test
     void deleteComment() {
-        // given
-         commentMapper.insertComment(commentWriteDTO);
-        // when
-        commentMapper.deleteComment(commentWriteDTO.getCommentId());
-        // then
-        List<CommentListDTO> list = commentMapper.selectList(commentWriteDTO.getBoardId());
-
-        assertThat(list)
-                .extracting("commentId")
-                .doesNotContain(commentWriteDTO.getCommentId());
     }
 }
