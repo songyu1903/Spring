@@ -47,4 +47,10 @@ class DynamicMapperTest {
         List<BoardListDTO> list = dynamicMapper.selectList2(dynamicDTO);
         System.out.println("list = " + list);
     }
+
+    @Test
+    void selectInTest(){
+        List<BoardListDTO> list = dynamicMapper.selectInTest(List.of("test", "bbb"));
+        System.out.println("list = " + list);
+    }
 }

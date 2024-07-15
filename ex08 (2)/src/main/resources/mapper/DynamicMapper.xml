@@ -55,6 +55,15 @@
         </where>
         ORDER BY B.BOARD_ID DESC
     </select>
-
+    <select id="selectInTest">
+        SELECT BOARD_ID, TITLE, CONTENT, CREATED_DATE, MEMBER_ID,
+               M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+                              ON B.MEMBER_ID  = M.MEMBER_ID
+        WHERE M.LOGIN_ID IN
+              <foreach collection="loginIds" item="str" separator="," open="(" close=")">
+                  #{str}
+              </foreach>
+    </select>
 
 </mapper>

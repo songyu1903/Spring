@@ -22,6 +22,16 @@
                               ON B.MEMBER_ID = M.MEMBER_ID
         ORDER BY B.BOARD_ID DESC
     </select>
+
+    <select id="searchList">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+               M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+                              ON B.MEMBER_ID = M.MEMBER_ID
+
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
 </mapper>
 
 

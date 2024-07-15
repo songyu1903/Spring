@@ -13,4 +13,6 @@ public interface DynamicMapper {
     List<BoardListDTO> selectList2(DynamicDTO dynamicDTO);
 
     List<BoardListDTO> selectList3(DynamicDTO dynamicDTO);
+
+    List<BoardListDTO> selectInTest(List<String> loginIds);
 }
