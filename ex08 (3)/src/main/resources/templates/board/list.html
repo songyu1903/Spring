@@ -1,0 +1,106 @@
++<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        section{
+            margin: 50px auto;
+            width: 800px;
+        }
+        h1{
+            margin: 20px;
+        }
+        thead {
+            text-align: center;
+        }
+
+        table {
+            border-color: black;
+            border-top: 1px solid;
+        }
+
+        th{
+            border-color: black;
+            border-bottom: 3px solid;
+            height: 40px;
+        }
+        td{
+            border-bottom: 1px solid black;
+            height: 30px;
+        }
+        th,
+        td {
+            padding: 5px;
+            width: 200px;
+        }
+
+        .flex{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button{
+            height: 30px;
+            width: 100px;
+            margin-top: 20px;
+        }
+
+    </style>
+    <script defer th:src="@{/js/board/list.js}"></script>
+</head>
+<body>
+<section>
+    <div class="flex">
+        <h1>커뮤니티 게시판</h1>
+
+        <th:block th:if="${session.memberId != null}">
+            <a th:href="@{/member/logout}">로그아웃</a>
+            <button type="button" id="write-btn">글쓰기</button>
+        </th:block>
+        <th:block th:unless="${session.memberId != null}">
+            <a th:href="@{/member/login}">로그인</a>
+            <a th:href="@{/member/join}">회원가입</a>
+        </th:block>
+
+    </div>
+    <table cellspacing="0">
+        <thead>
+        <tr>
+            <th>게시물 번호</th>
+            <th>게시물 제목</th>
+            <th>작성자</th>
+            <th>작성일자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board : ${list}">
+            <td th:text="${board.boardId}"></td>
+            <td>
+                <a th:href="@{/board/detail(boardId=${board.boardId})}" th:text="${board.title}"></a>
+            </td>
+            <td th:text="${board.loginId}"></td>
+            <td th:text="${board.createdDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<div>
+    <form th:action="@{/board/list}" method="get">
+        <input type="date" name="createdDate">
+        <br>
+        <select name="searchType">
+            <option value="title">제목</option>
+            <option value="loginId">아이디</option>
+        </select>
+        <input type="text" name="keyword">
+        <button>검색</button>
+    </form>
+</div>
+
+</body>
+</html>

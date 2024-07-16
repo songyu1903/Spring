@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ex08.mapper.DynamicMapper">
+    <select id="selectList" parameterType="dynamicDTO" resultType="boardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+               M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+                              ON B.MEMBER_ID = M.MEMBER_ID
+        <if test="searchType == 'title'">
+            WHERE TITLE LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="searchType == 'loginId'">
+            WHERE LOGIN_ID LIKE '%' || #{keyword} || '%'
+        </if>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+    <select id="selectList2" parameterType="dynamicDTO" resultType="boardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+        M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+        ON B.MEMBER_ID = M.MEMBER_ID
+        <choose>
+            <when test="searchType == 'title'">
+                WHERE TITLE LIKE '%' || #{keyword} || '%'
+            </when>
+            <when test="searchType == 'loginId'">
+                WHERE LOGIN_ID LIKE '%' || #{keyword} || '%'
+            </when>
+            <otherwise>
+
+            </otherwise>
+        </choose>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+    <select id="selectList3" parameterType="dynamicDTO" resultType="boardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+        M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+        ON B.MEMBER_ID = M.MEMBER_ID
+        <where>
+            <choose>
+                <when test="searchType == 'title'">
+                    TITLE LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="searchType == 'loginId'">
+                    LOGIN_ID LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+        </where>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+    <select id="selectList4" parameterType="dynamicDTO" resultType="boardListDTO">
+        SELECT B.BOARD_ID, B.TITLE, TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+        M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+        ON B.MEMBER_ID = M.MEMBER_ID
+        <trim prefix="where" prefixOverrides="and">
+            <choose>
+                <when test="searchType == 'title'">
+                    TITLE LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="searchType == 'loginId'">
+                    LOGIN_ID LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+            AND CREATED_DATE >= #{createdDate}
+        </trim>
+        ORDER BY B.BOARD_ID DESC
+    </select>
+
+    <select id="selectInTest">
+        SELECT BOARD_ID, TITLE, CONTENT, CREATED_DATE, B.MEMBER_ID,
+               M.LOGIN_ID
+        FROM TBL_BOARD B JOIN TBL_MEMBER M
+                              ON B.MEMBER_ID = M.MEMBER_ID
+        WHERE M.LOGIN_ID IN
+              <foreach collection="loginIds" item="str" separator="," open="(" close=")">
+                #{str}
+              </foreach>
+    </select>
+</mapper>
