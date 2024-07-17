@@ -67,3 +67,36 @@ function findAddress(){
             }
         }).open();
 }
+
+{  // 비밀번호 유효성 검사
+
+    // 비밀번호 정규 표현식 : 영문 , 숫자 8자리 이상
+    let reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/
+
+    let $pw = document.querySelector('#password');
+    let $msg = document.querySelector('#pw-msg')
+
+    $pw.addEventListener('change' , function () {
+        let value = this.value;
+
+       if(reg.test(value)){
+           console.log("접속 완료")
+           $msg.innerText = '사용 가능한 비밀번호입니다.'
+       } else{
+           console.log("다시 입력")
+           $msg.innerText = '영문과 숫자를 합쳐 4자리 이상을 입력해주세요.'
+       }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+

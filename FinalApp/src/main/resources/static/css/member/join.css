@@ -71,3 +71,7 @@ input[type='radio'] {
     opacity: 0;
 }
 /* 추가된 코드 끝 */
+#pw-msg{
+    font-size: 13px;
+    color: red;
+}
