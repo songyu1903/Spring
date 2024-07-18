@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,19 +8,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
 </head>
 <body>
-<header class="header">
-  <div class="header-container">
-    <a href="#" class="logo">LOGO</a>
-    <nav class="nav">
-      <a href="login.html" class="nav-item login">로그인</a>
-      <a href="join.html" class="nav-item signup">회원가입</a>
-    </nav>
-  </div>
-</header>
+<!-- th:replace 는 특정 fragment 를 이 태그와 교체한다. -->
+<!-- th:replace="파일 경로 :: 조각 이름" -->
+<header th:replace="~{fragments/header :: header}"></header>
 <div class="container">
   <h1 class="title">커뮤니티 게시판</h1>
   <div class="btn-wrap">
-    <button class="add-post-btn">새 게시글 작성</button>
+    <button type="button" class="add-post-btn">새 게시글 작성</button>
   </div>
   <div class="board">
     <!-- 게시물 샘플 -->
@@ -74,4 +68,9 @@
 </div>
 <!-- /페이징 처리 -->
 </body>
+
+<script>
+  let $writeBtn = document.querySelector('.add-post-btn');
+  $writeBtn.addEventListener('click ' , () => { location.href = "/board/write"; });
+</script>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- fragment는 일부 HTML 태그를 조각으로 등록하는 속성이다.
+    th:fragment="조각 이름"
+-->
+<header class="header" th:fragment="header">
+    <div class="header-container">
+        <a th:href="@{/board/list}" class="logo">LOGO</a>
+        <nav class="nav" th:if="${session.memberId == null}">
+            <a th:href="@{/member/login}" class="nav-item login">로그인</a>
+            <a th:href="@{/member/join}" class="nav-item signup">회원가입</a>
+        </nav>
+
+        <nav class="nav" th:unless="${session.memberId == null}">
+            <a th:href="@{/member/logout}" class="nav-item login">로그아웃</a>
+        </nav>
+    </div>
+</header>
+</body>
+</html>

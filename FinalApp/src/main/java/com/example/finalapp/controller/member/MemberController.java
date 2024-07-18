@@ -2,6 +2,7 @@ package com.example.finalapp.controller.member;
 
 import com.example.finalapp.dto.member.MemberJoinDTO;
 import com.example.finalapp.service.member.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -44,4 +45,27 @@ public class MemberController {
         return "member/login";
     }
 
+    @PostMapping("/login")
+    public String login(String loginId, String password,
+                        HttpSession session){
+        Long memberId = null;
+        try {
+            memberId = memberService.findMemberId(loginId, password);
+        } catch (IllegalStateException e) {
+            log.error(e.toString());
+            return "member/login";
+        } catch(Exception e){
+            log.error(e.toString());
+            return "member/login";
+        }
+        session.setAttribute("memberId", memberId);
+        return "board/list";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+//        세션 초기화
+        session.invalidate();
+        return "board/list";
+    }
 }
