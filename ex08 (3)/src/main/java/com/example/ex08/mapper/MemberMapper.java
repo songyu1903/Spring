@@ -1,6 +1,7 @@
 package com.example.ex08.mapper;
 
 import com.example.ex08.dto.MemberDTO;
+import com.example.ex08.dto.MemberDetailDTO;
 import com.example.ex08.dto.MemberListDTO;
 import com.example.ex08.dto.MemberSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,6 +30,10 @@ public interface MemberMapper {
     List<MemberDTO> selectListMember(MemberDTO memberDTO);
 
     List<MemberListDTO> searchMemberList(MemberSearchDTO memberSearchDTO);
+
+//    List<MemberDetailDTO> selectMemberDetail(MemberDetailDTO memberDetailDTO);
+
+     Optional<MemberDetailDTO> selectMemberDetail(Long memberId);
 }
 
 

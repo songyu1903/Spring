@@ -1,6 +1,7 @@
 package com.example.ex08.controller;
 
 import com.example.ex08.dto.MemberDTO;
+import com.example.ex08.dto.MemberDetailDTO;
 import com.example.ex08.dto.MemberListDTO;
 import com.example.ex08.dto.MemberSearchDTO;
 import com.example.ex08.exception.DuplicatedLoginIdException;
@@ -105,7 +106,12 @@ public class MemberController {
         model.addAttribute("list", memberList);
         return "member/list";
     }
-
+    @GetMapping("/detail")
+    public String detail(Long memberId, Model model) {
+        MemberDetailDTO memberDetail = memberService.selectDetailMember(memberId);
+        model.addAttribute("memberDetail", memberDetail);
+        return "member/detail";
+    }
 }
 
 

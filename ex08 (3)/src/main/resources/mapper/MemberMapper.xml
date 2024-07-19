@@ -26,7 +26,8 @@
     <select id="searchMemberList">
         SELECT M.MEMBER_ID, M.LOGIN_ID, M.NAME
         FROM TBL_MEMBER M
-        <trim prefix="WHERE" prefixOverrides="AND">
+ <!--   <trim prefix="WHERE" prefixOverrides="AND"> -->
+        <where>
             <choose>
                 <when test="searchType == 'loginId'">
                     LOGIN_ID LIKE '%' || #{keyword} || '%'
@@ -35,10 +36,17 @@
                     NAME LIKE '%' || #{keyword} ||'%'
                 </when>
             </choose>
-        </trim>
+        </where>
+<!--        </trim>-->
         ORDER BY M.MEMBER_ID ASC
     </select>
 
+    <select id="selectMemberDetail">
+        SELECT MEMBER_ID, LOGIN_ID, NAME, GENDER
+        FROM TBL_MEMBER
+        <!-- 특정 멤버 출력할려면 PK를 사용해야한다. -->
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>
 
 

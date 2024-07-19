@@ -41,13 +41,19 @@ public class MemberService {
         return memberMapper.selectLoginIdCount(loginId);
     }
 
+//    멤버 list 정보 서비스
     public List<MemberDTO> selectListMember(MemberDTO memberDTO){
         return memberMapper.selectListMember(memberDTO);
     }
+//    멤버 list 검색 서비스
     public List<MemberListDTO> findMemberList(MemberSearchDTO memberSearchDTO){
         return memberMapper.searchMemberList(memberSearchDTO);
     }
-
+//    멤버 detail 정보 서비스
+    public MemberDetailDTO selectDetailMember(Long memberId){
+        return memberMapper.selectMemberDetail(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지않는 회원번호"));
+    }
 }
 
 

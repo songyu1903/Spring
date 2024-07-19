@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+    <table border="1">
+<!--  tr 은 행  -->
+        <tr>
+            <td>번호</td>
+            <td th:text="${member.memberId}"></td>
+        </tr>
+        <tr>
+            <td>아이디</td>
+            <td th:text="${member.loginId}"></td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td th:text="${member.name}"></td>
+        </tr>
+        <tr>
+            <td>성별</td>
+            <td th:text="${member.gender}"></td>
+        </tr>
+    </table>
+    <button type="button" id="list-btn">목록으로</button>
+    <script>
+        let $listBtn = document.querySelector('#list-btn');
+
+        $listBtn.addEventListener("click" , () =>{
+            location.href = '/member/list';
+        })
+    </script>
 </body>
 </html>

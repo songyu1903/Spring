@@ -14,9 +14,12 @@
             <th>로그인아이디</th>
             <th>이름</th>
         </tr>
+        <!-- 빠른 for문 -->
         <tr th:each="member : ${list}">
             <td  th:text="${member.memberId}"></td>
-            <td th:text="${member.loginId}"></td>
+            <td th:text="${member.loginId}">
+                <a th:href="@{/member/detail(memberId=${member.memberId})}" th:text="${member.loginId}"></a>
+            </td>
             <td th:text="${member.name}"></td>
         </tr>
     </table>
