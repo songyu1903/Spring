@@ -37,7 +37,7 @@ public class MemberController {
 //            log.info("안녕하세요");
             return "member/join";
         }
-        return "member/login";
+        return "redirect:/member/login";
     }
 
     @GetMapping("/login")
@@ -59,13 +59,13 @@ public class MemberController {
             return "member/login";
         }
         session.setAttribute("memberId", memberId);
-        return "board/list";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
 //        세션 초기화
         session.invalidate();
-        return "board/list";
+        return "redirect:/board/list";
     }
 }

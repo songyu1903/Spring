@@ -4,6 +4,7 @@ import com.example.finalapp.dto.board.BoardDetailDTO;
 import com.example.finalapp.dto.board.BoardListDTO;
 import com.example.finalapp.dto.board.BoardModifyDTO;
 import com.example.finalapp.dto.board.BoardWriteDTO;
+import com.example.finalapp.dto.page.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface BoardMapper {
     Optional<BoardDetailDTO> selectBoard(Long boardId);
 
     List<BoardListDTO> selectList();
+
+    List<BoardListDTO> selectListWithPage(PageRequestDTO pageRequestDTO);
+
+    int selectTotal();
 }

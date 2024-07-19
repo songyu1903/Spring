@@ -21,7 +21,9 @@
     </update>
 
     <select id="selectBoard">
-        SELECT B.BOARD_ID, B.MEMBER_ID, B.TITLE, B.CONTENT, B.CREATED_DATE, B.MODIFIED_DATE,
+        SELECT B.BOARD_ID, B.MEMBER_ID, B.TITLE, B.CONTENT,
+               TO_CHAR(B.CREATED_DATE, 'YYYY-MM-DD') AS CREATED_DATE,
+               TO_CHAR(B.MODIFIED_DATE, 'YYYY-MM-DD') AS MODIFIED_DATE,
                M.LOGIN_ID
         FROM TBL_BOARD B JOIN TBL_MEMBER M
             ON B.MEMBER_ID = M.MEMBER_ID
@@ -33,5 +35,28 @@
         FROM TBL_BOARD B JOIN TBL_MEMBER M
             ON B.MEMBER_ID = M.MEMBER_ID
         ORDER BY B.BOARD_ID DESC
+    </select>
+
+    <select id="selectListWithPage">
+        SELECT BOARD_ID, MEMBER_ID, LOGIN_ID, TITLE
+        FROM (
+            SELECT ROWNUM AS RNUM, BOARD_ID, MEMBER_ID, LOGIN_ID, TITLE
+            FROM (
+                SELECT B.BOARD_ID, B.MEMBER_ID, B.TITLE, M.LOGIN_ID
+                FROM TBL_BOARD B JOIN TBL_MEMBER M
+                ON B.MEMBER_ID = M.MEMBER_ID
+                ORDER BY B.BOARD_ID DESC
+            )
+            -- 끝번호
+            <![CDATA[
+            WHERE ROWNUM <= #{page} * #{amount}
+            ]]>
+        )
+        -- 시작번호
+        WHERE RNUM > (#{page} - 1) * #{amount}
+    </select>
+
+    <select id="selectTotal">
+        SELECT COUNT(BOARD_ID) FROM TBL_BOARD
     </select>
 </mapper>

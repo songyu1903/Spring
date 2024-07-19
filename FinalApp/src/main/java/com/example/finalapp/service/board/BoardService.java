@@ -4,6 +4,7 @@ import com.example.finalapp.dto.board.BoardDetailDTO;
 import com.example.finalapp.dto.board.BoardListDTO;
 import com.example.finalapp.dto.board.BoardModifyDTO;
 import com.example.finalapp.dto.board.BoardWriteDTO;
+import com.example.finalapp.dto.page.PageRequestDTO;
 import com.example.finalapp.mapper.board.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,12 @@ public class BoardService {
     public List<BoardListDTO> findBoardList(){
         return boardMapper.selectList();
     }
+
+    public List<BoardListDTO> findListWithPage(PageRequestDTO pageRequestDTO){
+        return boardMapper.selectListWithPage(pageRequestDTO);
+    }
+    public int findTotal(){
+        return boardMapper.selectTotal();
+    }
+
 }
