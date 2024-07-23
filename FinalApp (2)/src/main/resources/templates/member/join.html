@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" th:href="@{/css/board/list.css}" />
+    <link rel="stylesheet" th:href="@{/css/member/join.css}" />
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script defer th:src="@{/js/member/join.js}"></script>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+    <h1 class="title">회원가입</h1>
+    <div class="form-wrap">
+        <form th:action="@{/member/join}" method="post" class="signup-form">
+            <div class="form-group">
+                <label for="loginId">아이디</label>
+                <input type="text" th:field="${memberJoinDTO.loginId}" required />
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" th:field="${memberJoinDTO.password}" required />
+                <span class="msg" id="pw-msg"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">비밀번호 확인</label>
+                <input type="password" id="confirm-password" name="confirm-password" required />
+            </div>
+
+            <div class="form-group">
+                <label>성별</label>
+                <div class="gender-wrap">
+                    <label for="gender-m" class="gender-box">
+                        <span>남자</span>
+                        <input type="radio" id="gender-m" name="gender" value="M" />
+                    </label>
+                    <label for="gender-f" class="gender-box">
+                        <span>여자</span>
+                        <input type="radio" id="gender-f" name="gender" value="F" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" th:field="${memberJoinDTO.email}" required />
+            </div>
+            <div class="form-group">
+                <button type="button" id="find-addr-btn">주소 찾기</button>
+            </div>
+            <div class="form-group">
+                <label for="address">주소</label>
+                <input type="text" th:field="${memberJoinDTO.address}" required />
+            </div>
+            <div class="form-group">
+                <label for="addressDetail">상세 주소</label>
+                <input type="text" th:field="${memberJoinDTO.addressDetail}" required />
+            </div>
+            <div class="form-group">
+                <label for="zipcode">우편번호</label>
+                <input type="text" th:field="${memberJoinDTO.zipcode}" required />
+            </div>
+            <button type="submit" class="submit-btn">회원가입</button>
+        </form>
+    </div>
+</div>
+<!-- 일반적으로 js에서 타임리프 문법을 사용하는것은 불가능하다.
+그러나 HTML에 작성하는 js에서는 사용이 가능하다.
+
+th:inline="javascript" 을 script 태그에 작성하고
+해당 script에서 타임리프 문법을 사용할 때는 [] 두 개로 감싸주면 된다.
+-->
+<script th:inline="javascript">
+    let duplicated = [[${duplicate}]];
+
+    if(duplicated) {
+        alert('중복된 아이디입니다.');
+    }
+</script>
+</body>
+</html>

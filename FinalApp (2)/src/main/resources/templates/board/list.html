@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시판</title>
+  <link rel="stylesheet" th:href="@{/css/board/list.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" />
+</head>
+<body>
+<!--  th:replace 는 특정 fragment를 이 태그와 교체한다. -->
+<!-- th:replace="파일 경로 :: 조각 이름" -->
+<header th:replace="~{fragments/header :: header}"></header>
+<div class="container">
+  <h1 class="title">커뮤니티 게시판</h1>
+  <div class="btn-wrap">
+    <button class="add-post-btn">새 게시글 작성</button>
+  </div>
+  <div class="board">
+    <!-- 게시물 샘플 -->
+    <div class="board-item" th:each="board : ${list}">
+      <div class="board-img-box">
+
+        <div th:if="${board.fileId == null}" class="board-item-image" style="background-image: url(https://via.placeholder.com/300x200)"></div>
+        <div th:unless="${board.fileId == null}"
+             class="board-item-image"
+             th:style=" 'background-image: url(/upload/' + ${board.uploadPath} + '/th_' + ${board.uuid} + '_' + ${board.name} + ')' "></div>
+
+        <div class="board-item-info">
+              <span class="like">
+                <i class="fas fa-heart"></i>
+                <span class="like-count">12</span>
+              </span>
+          <span class="comment">
+                <i class="fas fa-comment"></i>
+                <span class="comment-count">5</span>
+              </span>
+        </div>
+      </div>
+      <div class="board-item-text">
+        <h3 class="board-item-title">
+          <a th:href="@{/board/detail(boardId=${board.boardId})}" th:text="${board.title}"></a>
+        </h3>
+        <span class="board-item-author" th:text="${board.loginId}"></span>
+      </div>
+    </div>
+    <!-- /게시물 샘플 -->
+  </div>
+</div>
+<!-- 페이징 처리 -->
+<div class="page-container">
+  <ul class="page-box">
+    <a th:href="@{/board/list(page=${pageSetDTO.startPage - 1})}" class="page-a" th:if="${pageSetDTO.prev}">
+      <li class="page-num prev">&lt</li>
+    </a>
+<!--
+    페이지 세트 처리는 시작번호~끝번호 까지 반복을 돌려야 하므로 빠른 for문으로는 처리가 불가능하다.
+    그렇기 때문에 타임리프에서 제공해주는 객체를 사용하여 처리한다.
+    #을 붙이면 타임리프에서 제공해주는 객체를 사용할 수 있다.
+    #numbers객체는 sequence(시작 값, 끝 값)라는 메서드를 지원해준다.
+    sequence(1,5) -> [1, 2, 3, 4, 5]
+-->
+    <a th:href="@{/board/list(page=${i})}"
+       class="page-a"
+       th:each="i : ${#numbers.sequence(pageSetDTO.startPage, pageSetDTO.endPage)}">
+      <li class="page-num" th:classappend="${pageSetDTO.pageRequestDTO.page == i ? 'active' : '' }" th:text="${i}"></li>
+    </a>
+
+    <a th:href="@{/board/list(page=${pageSetDTO.endPage + 1})}" class="page-a" th:if="${pageSetDTO.next}">
+      <li class="page-num next">&gt</li>
+    </a>
+  </ul>
+</div>
+<!-- /페이징 처리 -->
+
+<script>
+  let $writeBtn = document.querySelector('.add-post-btn');
+
+  $writeBtn.addEventListener('click', () => { location.href = '/board/write'; });
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
