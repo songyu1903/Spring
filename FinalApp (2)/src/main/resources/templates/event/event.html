@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        div {
+            border: 1px solid black;
+        }
+
+        #wrap {
+            width: 400px;
+            height: 400px;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap"></div>
+
+<button type="button1" id="btn">요소 추가</button>
+
+<script>
+    let $btn = document.querySelector("#btn");
+    let $wrap = document.querySelector("#wrap");
+
+    $btn.addEventListener("click", function () {
+        $wrap.innerHTML = "<div class='item'>박스</div>";
+    });
+
+    // let $item = document.querySelector(".item");
+
+    // $item?.addEventListener("click", function () {
+    //   alert("아이템 클릭!!!");
+    // });
+
+    $wrap.addEventListener("click", function (e) {
+        console.log(e.target);
+        if (e.target.classList.contains("item")) {
+            alert("item 클릭!!!");
+        }
+    });
+</script>
+</body>
+</html>
