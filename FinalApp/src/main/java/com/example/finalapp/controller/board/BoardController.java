@@ -7,17 +7,17 @@ import com.example.finalapp.dto.board.BoardWriteDTO;
 import com.example.finalapp.dto.page.PageRequestDTO;
 import com.example.finalapp.dto.page.PageSetDTO;
 import com.example.finalapp.service.board.BoardService;
+import com.example.finalapp.service.board.FileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +26,7 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
+    private final FileService fileService;
 
     // 게시물 리스트
     @GetMapping("/list")
@@ -54,12 +55,21 @@ public class BoardController {
     }
     // 게시물 작성 후 게시물 리스트 페이지 이동
     @PostMapping("/write")
-    public String write(@SessionAttribute("memberId") Long memberId, BoardWriteDTO boardWriteDTO){
+    public String write(@SessionAttribute("memberId") Long memberId, BoardWriteDTO boardWriteDTO,
+                        @RequestParam("boardFile") List<MultipartFile> files){
 
         boardWriteDTO.setMemberId(memberId);
         log.info("boardWriteDTO: {}", boardWriteDTO);
 
-        boardService.addBoard(boardWriteDTO);
+        log.info("file info: {}", files.get(0).getOriginalFilename());
+
+//        boardService.addBoard(boardWriteDTO);
+        try {
+            boardService.addBoardWithFiles(boardWriteDTO, files);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            return "redirect:/board/write";
+        }
 
         return "redirect:/board/list";
     }
