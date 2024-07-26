@@ -37,12 +37,3 @@ public class MemberService {
     }
 }
 
-
-
-
-
-
-
-
-
-

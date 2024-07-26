@@ -3,6 +3,7 @@ package com.example.finalapp.service.board;
 import com.example.finalapp.dto.board.file.FileListDTO;
 import com.example.finalapp.dto.board.file.FileWriteDTO;
 import com.example.finalapp.mapper.board.FileMapper;
+import com.example.finalapp.vo.file.FileVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,10 @@ public class FileService {
 
     public void removeFile(Long boardId) {
         fileMapper.deleteFile(boardId);
+    }
+
+    public List<FileVO> findOldList(){
+        return fileMapper.selectOldList();
     }
 }
 

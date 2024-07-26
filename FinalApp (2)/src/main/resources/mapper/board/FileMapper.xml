@@ -19,6 +19,12 @@
         DELETE FROM TBL_FILE
         WHERE BOARD_ID = #{boardId}
     </delete>
+
+    <select id="selectOldList">
+        SELECT FILE_ID, NAME, UPLOAD_PATH, UUID, BOARD_ID
+        FROM TBL_FILE
+        WHERE UPLOAD_PATH = TO_CHAR(SYSDATE - 1, 'YYYY/MM/DD')
+    </select>
 </mapper>
 
 

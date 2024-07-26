@@ -24,4 +24,22 @@
         DELETE FROM TBL_COMMENT
         WHERE COMMENT_ID = #{commentId}
     </delete>
+
+    <select id="selectListWithSlice">
+        SELECT COMMENT_ID, CONTENT, CREATED_DATE, MODIFIED_DATE, BOARD_ID, MEMBER_ID, LOGIN_ID
+        FROM (
+            SELECT ROWNUM AS RNUM, COMMENT_ID, CONTENT, CREATED_DATE, MODIFIED_DATE, BOARD_ID, MEMBER_ID, LOGIN_ID
+            FROM(
+            SELECT C.COMMENT_ID, C.CONTENT, C.CREATED_DATE , C.MODIFIED_DATE, C.BOARD_ID, C.MEMBER_ID,
+            M.LOGIN_ID
+            FROM TBL_COMMENT C JOIN TBL_MEMBER M
+            ON C.BOARD_ID = #{boardId} AND C.MEMBER_ID = M.MEMBER_ID
+            ORDER BY COMMENT_ID DESC
+            )
+            <![CDATA[
+            WHERE ROWNUM <= #{pageDTO.page} * #{pageDTO.amount} + 1
+            ]]>
+        )
+        WHERE RNUM > (#{pageDTO.page} - 1) * #{pageDTO.amount}
+    </select>
 </mapper>

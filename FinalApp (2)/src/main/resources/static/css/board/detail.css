@@ -207,3 +207,10 @@
     margin-left: 10px;
     background-color: #00c7ae;
 }
+
+.reply-time{
+    font-size: 12px;
+    color: #888888;
+    min-width: 50px;
+    margin-top: 5px;
+}

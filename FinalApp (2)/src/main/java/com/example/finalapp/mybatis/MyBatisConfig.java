@@ -3,6 +3,7 @@ package com.example.finalapp.mybatis;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class MyBatisConfig {
@@ -36,7 +38,8 @@ public class MyBatisConfig {
 
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath*:/mapper/**/*.xml"));
         sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:/config/config.xml"));
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.example.finalapp.dto");
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.example.finalapp.dto, com.example.finalapp.vo");
+
 
         SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
         sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
